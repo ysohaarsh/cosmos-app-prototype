@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmos — Login</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .login-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: var(--space-lg);
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 440px;
+      padding: var(--space-2xl) var(--space-xl);
+      text-align: center;
+      animation: fadeInUp 0.8s var(--ease-smooth) forwards;
+    }
+
+    .login-logo {
+      margin-bottom: var(--space-xl);
+    }
+
+    .login-logo .cosmos-ring {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--space-md);
+      border-radius: 50%;
+      background: var(--gradient-cosmic);
+      padding: 3px;
+      animation: spin-slow 12s linear infinite;
+    }
+
+    .login-logo .cosmos-ring-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--bg-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .login-logo h1 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--gradient-cosmic);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: var(--space-xs);
+    }
+
+    .login-logo p {
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
+    }
+
+    .login-form .btn-cosmic {
+      width: 100%;
+      padding: 16px;
+      font-size: 1rem;
+    }
+
+    .login-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+      color: var(--text-muted);
+      font-size: 0.8125rem;
+    }
+
+    .login-divider::before, .login-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--glass-border);
+    }
+
+    .social-logins {
+      display: flex;
+      gap: var(--space-md);
+    }
+
+    .social-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding: 14px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--duration-normal) var(--ease-smooth);
+      font-family: var(--font-body);
+    }
+
+    .social-btn:hover {
+      background: rgba(255,255,255, 0.08);
+      color: var(--text-primary);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .social-btn .social-icon {
+      font-size: 1.25rem;
+    }
+
+    .login-footer {
+      margin-top: var(--space-xl);
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .login-footer a {
+      color: var(--accent-purple);
+      font-weight: 500;
+    }
+
+    .login-footer a:hover {
+      color: var(--accent-pink);
+    }
+
+    /* Floating planets */
+    .planet {
+      position: fixed;
+      border-radius: 50%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .planet-1 {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle at 35% 35%, #3d2272, #1a0d3a);
+      top: 10%;
+      left: 5%;
+      box-shadow: inset -20px -20px 40px rgba(0,0,0,0.5), 0 0 60px rgba(124,77,255,0.2);
+      animation: float-planet 15s ease-in-out infinite alternate;
+    }
+
+    .planet-2 {
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle at 35% 35%, #c94bdb, #6c3bea);
+      bottom: 15%;
+      right: 10%;
+      box-shadow: inset -8px -8px 20px rgba(0,0,0,0.5), 0 0 30px rgba(201,75,219,0.3);
+      animation: float-planet 10s ease-in-out infinite alternate-reverse;
+    }
+
+    .planet-3 {
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle at 35% 35%, #ff6fd8, #c94bdb);
+      top: 30%;
+      right: 20%;
+      box-shadow: inset -4px -4px 10px rgba(0,0,0,0.5), 0 0 20px rgba(255,111,216,0.2);
+      animation: float-planet 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes float-planet {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(20px, -30px); }
+    }
+
+    /* Orbit ring */
+    .orbit-ring {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border: 1px solid rgba(124, 77, 255, 0.08);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+      animation: spin-slow 60s linear infinite;
+    }
+
+    .orbit-ring::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: var(--accent-purple);
+      border-radius: 50%;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 20px var(--accent-purple);
+    }
+
+    .orbit-ring-2 {
+      width: 700px;
+      height: 700px;
+      border-color: rgba(201, 75, 219, 0.05);
+      animation-duration: 90s;
+      animation-direction: reverse;
+    }
+
+    .orbit-ring-2::after {
+      background: var(--accent-pink);
+      box-shadow: 0 0 20px var(--accent-pink);
+      width: 6px;
+      height: 6px;
+      top: auto;
+      bottom: -3px;
+    }
+
+    .forgot-link {
+      text-align: right;
+      margin-top: -8px;
+    }
+
+    .forgot-link a {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .forgot-link a:hover {
+      color: var(--accent-purple);
+    }
+  </style>
+</head>
+<body>
+  <!-- Starfield -->
+  <div class="starfield">
+    <div class="stars-layer stars-1"></div>
+    <div class="stars-layer stars-2"></div>
+    <div class="stars-layer stars-3"></div>
+  </div>
+
+  <!-- Nebula Glows -->
+  <div class="nebula-glow purple"></div>
+  <div class="nebula-glow pink"></div>
+
+  <!-- Planets -->
+  <div class="planet planet-1"></div>
+  <div class="planet planet-2"></div>
+  <div class="planet planet-3"></div>
+
+  <!-- Orbit Rings -->
+  <div class="orbit-ring"></div>
+  <div class="orbit-ring orbit-ring-2"></div>
+
+  <!-- Login Page -->
+  <div class="page-container login-page">
+    <div class="glass-card login-card">
+      <div class="login-logo">
+        <div class="cosmos-ring">
+          <div class="cosmos-ring-inner">🌌</div>
+        </div>
+        <h1>COSMOS</h1>
+        <p>Explore the universe within</p>
+      </div>
+
+      <form class="login-form" onsubmit="event.preventDefault(); window.location.href='dashboard.html'">
+        <div class="input-group">
+          <label class="input-label" for="email">Email Address</label>
+          <input class="input-field" type="email" id="email" placeholder="astronaut@cosmos.io">
+        </div>
+
+        <div class="input-group">
+          <label class="input-label" for="password">Password</label>
+          <input class="input-field" type="password" id="password" placeholder="••••••••••">
+        </div>
+
+        <div class="forgot-link">
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-cosmic">
+          🚀 Launch Into Cosmos
+        </button>
+      </form>
+
+      <div class="login-divider">or continue with</div>
+
+      <div class="social-logins">
+        <button class="social-btn">
+          <span class="social-icon">🌐</span> Google
+        </button>
+        <button class="social-btn">
+          <span class="social-icon">🍎</span> Apple
+        </button>
+        <button class="social-btn">
+          <span class="social-icon">⚡</span> SSO
+        </button>
+      </div>
+
+      <div class="login-footer">
+        New to the cosmos? <a href="#">Create an account</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

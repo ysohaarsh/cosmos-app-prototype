@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmos — Profile</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .profile-header { display: flex; align-items: center; gap: var(--space-xl); margin-bottom: var(--space-2xl); }
+    .profile-avatar-wrap { position: relative; }
+    .profile-avatar-ring { padding: 4px; border-radius: 50%; background: var(--gradient-cosmic); display: inline-block; }
+    .profile-avatar { width: 120px; height: 120px; border-radius: 50%; background: var(--bg-deep); border: 4px solid var(--bg-deep); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+    .profile-level { position: absolute; bottom: 0; right: 0; background: var(--gradient-cosmic); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; border: 3px solid var(--bg-deep); }
+    .profile-info h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin-bottom: var(--space-xs); }
+    .profile-handle { color: var(--accent-purple); font-size: 0.9375rem; margin-bottom: var(--space-sm); }
+    .profile-bio { color: var(--text-secondary); font-size: 0.9375rem; max-width: 500px; line-height: 1.5; }
+    .profile-stats-bar { display: flex; gap: var(--space-2xl); margin-top: var(--space-md); }
+    .profile-stat { text-align: center; }
+    .profile-stat-val { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; }
+    .profile-stat-lbl { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; }
+    .achievements-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--space-md); }
+    .achievement-card { padding: var(--space-lg); text-align: center; }
+    .achievement-icon { font-size: 2.5rem; margin-bottom: var(--space-sm); display: block; }
+    .achievement-name { font-size: 0.8125rem; font-weight: 600; margin-bottom: 2px; }
+    .achievement-desc { font-size: 0.6875rem; color: var(--text-muted); }
+    .constellation-map { width: 100%; height: 300px; border-radius: var(--radius-lg); position: relative; overflow: hidden; background: var(--bg-void); }
+    .constellation-map svg { width: 100%; height: 100%; }
+    .activity-feed { display: flex; flex-direction: column; gap: var(--space-md); }
+    .activity-item { display: flex; gap: var(--space-md); align-items: flex-start; padding: var(--space-md); border-radius: var(--radius-md); background: var(--glass-bg); border: 1px solid var(--glass-border); }
+    .activity-icon { width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.125rem; flex-shrink: 0; }
+    .activity-text { font-size: 0.875rem; }
+    .activity-text strong { color: var(--text-primary); }
+    .activity-text span { color: var(--text-secondary); }
+    .activity-time { font-size: 0.6875rem; color: var(--text-muted); margin-top: 4px; }
+    .profile-content { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-lg); }
+    .profile-actions { display: flex; gap: var(--space-md); margin-top: var(--space-lg); }
+  </style>
+</head>
+<body>
+  <div class="starfield"><div class="stars-layer stars-1"></div><div class="stars-layer stars-2"></div></div>
+  <div class="nebula-glow purple"></div><div class="nebula-glow blue"></div>
+  <div class="sidebar">
+    <div class="logo"><div class="logo-icon">🌌</div><span class="logo-text">COSMOS</span></div>
+    <nav>
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="explore.html" class="nav-item"><span class="nav-icon">🔭</span> Explore</a>
+      <a href="profile.html" class="nav-item active"><span class="nav-icon">👨‍🚀</span> Profile</a>
+      <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span> Settings</a>
+      <div style="flex:1"></div>
+      <a href="index.html" class="nav-item"><span class="nav-icon">🚪</span> Logout</a>
+    </nav>
+  </div>
+  <div class="main-content">
+    <!-- Profile Header -->
+    <div class="glass-card animate-in" style="padding: var(--space-2xl); margin-bottom: var(--space-2xl);">
+      <div class="profile-header">
+        <div class="profile-avatar-wrap">
+          <div class="profile-avatar-ring"><div class="profile-avatar">👨‍🚀</div></div>
+          <div class="profile-level">42</div>
+        </div>
+        <div class="profile-info">
+          <h1>Commander Harsh</h1>
+          <div class="profile-handle">@cosmic_commander</div>
+          <div class="profile-bio">Interstellar explorer, quantum navigator, and galactic cartographer. Mapping the unknown reaches of the cosmos since Stardate 2024.</div>
+          <div class="profile-stats-bar">
+            <div class="profile-stat"><div class="profile-stat-val">247</div><div class="profile-stat-lbl">Missions</div></div>
+            <div class="profile-stat"><div class="profile-stat-val">1,842</div><div class="profile-stat-lbl">Discoveries</div></div>
+            <div class="profile-stat"><div class="profile-stat-val">89</div><div class="profile-stat-lbl">Awards</div></div>
+            <div class="profile-stat"><div class="profile-stat-val">12K</div><div class="profile-stat-lbl">Followers</div></div>
+          </div>
+          <div class="profile-actions">
+            <button class="btn btn-cosmic">✏️ Edit Profile</button>
+            <button class="btn btn-ghost">📤 Share</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-content">
+      <div>
+        <!-- Constellation Map -->
+        <div class="section-title animate-in">🗺️ Discovery Constellation</div>
+        <div class="glass-card animate-in" style="padding: var(--space-lg); margin-bottom: var(--space-2xl);">
+          <div class="constellation-map">
+            <svg viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <radialGradient id="starG" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="white" stop-opacity="1"/><stop offset="100%" stop-color="white" stop-opacity="0"/></radialGradient>
+                <filter id="glow"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <!-- Constellation lines -->
+              <g stroke="rgba(124,77,255,0.3)" stroke-width="1" filter="url(#glow)">
+                <line x1="100" y1="80" x2="200" y2="120"/><line x1="200" y1="120" x2="280" y2="60"/>
+                <line x1="280" y1="60" x2="380" y2="100"/><line x1="380" y1="100" x2="420" y2="180"/>
+                <line x1="420" y1="180" x2="520" y2="140"/><line x1="520" y1="140" x2="600" y2="200"/>
+                <line x1="600" y1="200" x2="700" y2="160"/><line x1="200" y1="120" x2="250" y2="200"/>
+                <line x1="250" y1="200" x2="380" y2="220"/><line x1="380" y1="220" x2="420" y2="180"/>
+              </g>
+              <!-- Stars -->
+              <g filter="url(#glow)">
+                <circle cx="100" cy="80" r="4" fill="var(--accent-purple)"/><circle cx="200" cy="120" r="5" fill="var(--accent-pink)"/>
+                <circle cx="280" cy="60" r="3" fill="var(--accent-cyan)"/><circle cx="380" cy="100" r="6" fill="var(--accent-purple)"/>
+                <circle cx="420" cy="180" r="4" fill="var(--accent-pink)"/><circle cx="520" cy="140" r="5" fill="var(--accent-blue)"/>
+                <circle cx="600" cy="200" r="3" fill="var(--accent-green)"/><circle cx="700" cy="160" r="4" fill="var(--accent-purple)"/>
+                <circle cx="250" cy="200" r="3" fill="var(--accent-cyan)"/><circle cx="380" cy="220" r="4" fill="var(--accent-orange)"/>
+              </g>
+              <!-- Background stars -->
+              <g fill="rgba(255,255,255,0.3)">
+                <circle cx="50" cy="150" r="1"/><circle cx="150" cy="250" r="1"/><circle cx="350" cy="30" r="1"/>
+                <circle cx="450" cy="260" r="1"/><circle cx="550" cy="50" r="1"/><circle cx="650" cy="80" r="1"/>
+                <circle cx="750" cy="250" r="1.5"/><circle cx="130" cy="40" r="0.8"/><circle cx="500" cy="270" r="1"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <!-- Recent Activity -->
+        <div class="section-title animate-in">📋 Recent Activity</div>
+        <div class="activity-feed animate-in">
+          <div class="activity-item"><div class="activity-icon" style="background:rgba(124,77,255,0.15);">🚀</div><div><div class="activity-text"><strong>Completed</strong> <span>Mission Andromeda-7 with 340 new stellar mappings</span></div><div class="activity-time">2 hours ago</div></div></div>
+          <div class="activity-item"><div class="activity-icon" style="background:rgba(224,64,251,0.15);">🏆</div><div><div class="activity-text"><strong>Earned</strong> <span>the "Deep Space Pioneer" achievement badge</span></div><div class="activity-time">1 day ago</div></div></div>
+          <div class="activity-item"><div class="activity-icon" style="background:rgba(24,255,255,0.15);">🌟</div><div><div class="activity-text"><strong>Discovered</strong> <span>a binary star system in Sector K-19</span></div><div class="activity-time">3 days ago</div></div></div>
+          <div class="activity-item"><div class="activity-icon" style="background:rgba(105,240,174,0.15);">📊</div><div><div class="activity-text"><strong>Ranked</strong> <span>#7 in the Galactic Explorer Leaderboard</span></div><div class="activity-time">1 week ago</div></div></div>
+        </div>
+      </div>
+      <div>
+        <!-- Achievements -->
+        <div class="section-title animate-in">🏅 Achievements</div>
+        <div class="achievements-grid" style="margin-bottom: var(--space-2xl);">
+          <div class="glass-card achievement-card animate-in"><span class="achievement-icon">🌟</span><div class="achievement-name">Star Finder</div><div class="achievement-desc">1000+ stars</div></div>
+          <div class="glass-card achievement-card animate-in"><span class="achievement-icon">🚀</span><div class="achievement-name">Pioneer</div><div class="achievement-desc">100 missions</div></div>
+          <div class="glass-card achievement-card animate-in"><span class="achievement-icon">🔭</span><div class="achievement-name">Deep Eye</div><div class="achievement-desc">10 nebulae found</div></div>
+          <div class="glass-card achievement-card animate-in"><span class="achievement-icon">👑</span><div class="achievement-name">Commander</div><div class="achievement-desc">Level 40+</div></div>
+          <div class="glass-card achievement-card animate-in"><span class="achievement-icon">💎</span><div class="achievement-name">Rare Find</div><div class="achievement-desc">Black hole mapped</div></div>
+          <div class="glass-card achievement-card animate-in"><span class="achievement-icon">⚡</span><div class="achievement-name">Speed Run</div><div class="achievement-desc">5 missions in 1 day</div></div>
+        </div>
+        <!-- Skills -->
+        <div class="section-title animate-in">📡 Skill Radar</div>
+        <div class="glass-card animate-in" style="padding: var(--space-lg);">
+          <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:0.8125rem;font-weight:500;">Navigation</span><span style="font-size:0.75rem;color:var(--text-muted);">95%</span></div><div style="height:6px;border-radius:3px;background:rgba(255,255,255,0.06);"><div style="height:100%;width:95%;border-radius:3px;background:var(--gradient-cosmic);"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:0.8125rem;font-weight:500;">Cartography</span><span style="font-size:0.75rem;color:var(--text-muted);">88%</span></div><div style="height:6px;border-radius:3px;background:rgba(255,255,255,0.06);"><div style="height:100%;width:88%;border-radius:3px;background:var(--gradient-aurora);"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:0.8125rem;font-weight:500;">Combat</span><span style="font-size:0.75rem;color:var(--text-muted);">72%</span></div><div style="height:6px;border-radius:3px;background:rgba(255,255,255,0.06);"><div style="height:100%;width:72%;border-radius:3px;background:var(--gradient-nebula);"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:0.8125rem;font-weight:500;">Engineering</span><span style="font-size:0.75rem;color:var(--text-muted);">81%</span></div><div style="height:6px;border-radius:3px;background:rgba(255,255,255,0.06);"><div style="height:100%;width:81%;border-radius:3px;background:var(--gradient-ocean);"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:0.8125rem;font-weight:500;">Diplomacy</span><span style="font-size:0.75rem;color:var(--text-muted);">67%</span></div><div style="height:6px;border-radius:3px;background:rgba(255,255,255,0.06);"><div style="height:100%;width:67%;border-radius:3px;background:var(--gradient-solar);"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

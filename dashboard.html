@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmos — Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Activity Timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: var(--space-md);
+      padding: var(--space-md) 0;
+      position: relative;
+    }
+
+    .timeline-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 52px;
+      bottom: 0;
+      width: 1px;
+      background: var(--glass-border);
+    }
+
+    .timeline-dot {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-content {
+      flex: 1;
+    }
+
+    .timeline-title {
+      font-weight: 600;
+      font-size: 0.9375rem;
+      margin-bottom: 2px;
+    }
+
+    .timeline-desc {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
+
+    .timeline-time {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Chart placeholder */
+    .chart-area {
+      width: 100%;
+      height: 200px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(180deg, rgba(124,77,255,0.1) 0%, transparent 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chart-line {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .chart-line svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Quick action */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-md);
+    }
+
+    .quick-action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-lg);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--duration-normal) var(--ease-smooth);
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 500;
+    }
+
+    .quick-action-btn:hover {
+      background: rgba(255,255,255,0.06);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    .quick-action-btn .qa-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    /* Crew online */
+    .crew-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .crew-member {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-sm) 0;
+    }
+
+    .crew-member .crew-avatar {
+      position: relative;
+    }
+
+    .crew-member .crew-avatar .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      border: 2px solid var(--bg-deep);
+    }
+
+    .status-dot.online { background: var(--accent-green); }
+    .status-dot.away { background: var(--accent-orange); }
+    .status-dot.dnd { background: var(--accent-red); }
+
+    .crew-info {
+      flex: 1;
+    }
+
+    .crew-name {
+      font-weight: 600;
+      font-size: 0.9375rem;
+    }
+
+    .crew-role {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--space-lg);
+    }
+  </style>
+</head>
+<body>
+  <!-- Starfield -->
+  <div class="starfield">
+    <div class="stars-layer stars-1"></div>
+    <div class="stars-layer stars-2"></div>
+  </div>
+  <div class="nebula-glow purple"></div>
+  <div class="nebula-glow blue"></div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">🌌</div>
+      <span class="logo-text">COSMOS</span>
+    </div>
+    <nav>
+      <a href="dashboard.html" class="nav-item active">
+        <span class="nav-icon">🏠</span> Dashboard
+      </a>
+      <a href="explore.html" class="nav-item">
+        <span class="nav-icon">🔭</span> Explore
+      </a>
+      <a href="profile.html" class="nav-item">
+        <span class="nav-icon">👨‍🚀</span> Profile
+      </a>
+      <a href="settings.html" class="nav-item">
+        <span class="nav-icon">⚙️</span> Settings
+      </a>
+      <div style="flex:1"></div>
+      <a href="index.html" class="nav-item">
+        <span class="nav-icon">🚪</span> Logout
+      </a>
+    </nav>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="page-header animate-in">
+      <div>
+        <div class="page-title">Mission Control</div>
+        <div class="page-subtitle">Welcome back, Commander. Here's your galactic overview.</div>
+      </div>
+      <div style="display:flex; align-items:center; gap: var(--space-md);">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Search the cosmos...">
+        </div>
+        <div class="avatar">HY</div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="glass-card stat-card animate-in">
+        <div class="stat-icon" style="background: rgba(124,77,255,0.15); color: var(--accent-purple);">🚀</div>
+        <div class="stat-value">247</div>
+        <div class="stat-label">Missions Complete</div>
+        <div class="stat-change up">↑ 12% this month</div>
+      </div>
+      <div class="glass-card stat-card animate-in">
+        <div class="stat-icon" style="background: rgba(224,64,251,0.15); color: var(--accent-pink);">🌟</div>
+        <div class="stat-value">1,842</div>
+        <div class="stat-label">Stars Discovered</div>
+        <div class="stat-change up">↑ 8% this month</div>
+      </div>
+      <div class="glass-card stat-card animate-in">
+        <div class="stat-icon" style="background: rgba(24,255,255,0.15); color: var(--accent-cyan);">👥</div>
+        <div class="stat-value">36</div>
+        <div class="stat-label">Crew Members</div>
+        <div class="stat-change up">↑ 3 new</div>
+      </div>
+      <div class="glass-card stat-card animate-in">
+        <div class="stat-icon" style="background: rgba(105,240,174,0.15); color: var(--accent-green);">⏱️</div>
+        <div class="stat-value">98.7%</div>
+        <div class="stat-label">System Uptime</div>
+        <div class="stat-change up">↑ 0.2%</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="section-title animate-in">⚡ Quick Actions</div>
+    <div class="quick-actions animate-in" style="margin-bottom: var(--space-2xl);">
+      <button class="quick-action-btn">
+        <div class="qa-icon" style="background: rgba(124,77,255,0.15);">🛸</div>
+        New Mission
+      </button>
+      <button class="quick-action-btn">
+        <div class="qa-icon" style="background: rgba(224,64,251,0.15);">📡</div>
+        Scan Galaxy
+      </button>
+      <button class="quick-action-btn">
+        <div class="qa-icon" style="background: rgba(24,255,255,0.15);">🗺️</div>
+        Star Map
+      </button>
+      <button class="quick-action-btn">
+        <div class="qa-icon" style="background: rgba(105,240,174,0.15);">📊</div>
+        Reports
+      </button>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="content-grid">
+      <!-- Chart + Activity -->
+      <div>
+        <div class="section-title animate-in">📈 Mission Activity</div>
+        <div class="glass-card animate-in" style="padding: var(--space-lg); margin-bottom: var(--space-lg);">
+          <div class="chart-area">
+            <div class="chart-line">
+              <svg viewBox="0 0 600 200" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(124,77,255,0.3)"/>
+                    <stop offset="100%" stop-color="rgba(124,77,255,0)"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0 180 Q50 160 100 140 T200 100 T300 120 T400 60 T500 80 T600 40 L600 200 L0 200 Z" fill="url(#chartGrad)"/>
+                <path d="M0 180 Q50 160 100 140 T200 100 T300 120 T400 60 T500 80 T600 40" fill="none" stroke="var(--accent-purple)" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-title animate-in">🕐 Recent Activity</div>
+        <div class="glass-card animate-in" style="padding: var(--space-lg);">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background: rgba(124,77,255,0.2); color: var(--accent-purple);">🚀</div>
+              <div class="timeline-content">
+                <div class="timeline-title">Mission Andromeda-7 Completed</div>
+                <div class="timeline-desc">Successfully mapped 340 new stellar systems</div>
+                <div class="timeline-time">2 hours ago</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background: rgba(224,64,251,0.2); color: var(--accent-pink);">🌟</div>
+              <div class="timeline-content">
+                <div class="timeline-title">New Supernova Detected</div>
+                <div class="timeline-desc">Type Ia supernova in sector G-42</div>
+                <div class="timeline-time">5 hours ago</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background: rgba(24,255,255,0.2); color: var(--accent-cyan);">👤</div>
+              <div class="timeline-content">
+                <div class="timeline-title">New Crew Member Onboarded</div>
+                <div class="timeline-desc">Dr. Elena Vasquez joined Navigation Division</div>
+                <div class="timeline-time">1 day ago</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background: rgba(105,240,174,0.2); color: var(--accent-green);">✅</div>
+              <div class="timeline-content">
+                <div class="timeline-title">System Upgrade Complete</div>
+                <div class="timeline-desc">Quantum Navigation v4.2 deployed</div>
+                <div class="timeline-time">2 days ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Progress + Crew -->
+      <div>
+        <div class="section-title animate-in">🎯 Mission Progress</div>
+        <div class="glass-card animate-in" style="padding: var(--space-lg); margin-bottom: var(--space-lg); display: flex; flex-direction: column; align-items: center;">
+          <div class="progress-ring">
+            <svg width="120" height="120">
+              <circle class="bg-ring" cx="60" cy="60" r="54"/>
+              <circle class="progress" cx="60" cy="60" r="54" stroke="url(#progressGrad)" style="stroke-dashoffset: 68;"/>
+              <defs>
+                <linearGradient id="progressGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="var(--accent-purple)"/>
+                  <stop offset="100%" stop-color="var(--accent-pink)"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="ring-label">
+              <div class="ring-value">80%</div>
+              <div class="ring-text">Complete</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--space-md); text-align: center;">
+            <div style="font-weight: 600;">Operation Nebula</div>
+            <div style="font-size: 0.8125rem; color: var(--text-secondary);">Phase 3 of 4</div>
+          </div>
+        </div>
+
+        <div class="section-title animate-in">🟢 Crew Online</div>
+        <div class="glass-card animate-in" style="padding: var(--space-lg);">
+          <div class="crew-list">
+            <div class="crew-member">
+              <div class="crew-avatar">
+                <div class="avatar" style="background: var(--gradient-cosmic); width: 38px; height: 38px; font-size: 0.8rem;">AK</div>
+                <div class="status-dot online"></div>
+              </div>
+              <div class="crew-info">
+                <div class="crew-name">Alex Kim</div>
+                <div class="crew-role">Navigation Officer</div>
+              </div>
+            </div>
+            <div class="crew-member">
+              <div class="crew-avatar">
+                <div class="avatar" style="background: var(--gradient-aurora); width: 38px; height: 38px; font-size: 0.8rem;">EV</div>
+                <div class="status-dot online"></div>
+              </div>
+              <div class="crew-info">
+                <div class="crew-name">Elena Vasquez</div>
+                <div class="crew-role">Chief Scientist</div>
+              </div>
+            </div>
+            <div class="crew-member">
+              <div class="crew-avatar">
+                <div class="avatar" style="background: var(--gradient-nebula); width: 38px; height: 38px; font-size: 0.8rem;">JT</div>
+                <div class="status-dot away"></div>
+              </div>
+              <div class="crew-info">
+                <div class="crew-name">Jake Torres</div>
+                <div class="crew-role">Systems Engineer</div>
+              </div>
+            </div>
+            <div class="crew-member">
+              <div class="crew-avatar">
+                <div class="avatar" style="background: var(--gradient-ocean); width: 38px; height: 38px; font-size: 0.8rem;">SP</div>
+                <div class="status-dot dnd"></div>
+              </div>
+              <div class="crew-info">
+                <div class="crew-name">Sara Park</div>
+                <div class="crew-role">Communications</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

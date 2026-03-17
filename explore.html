@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmos — Explore</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .explore-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-lg); }
+    .explore-card { padding: 0; overflow: hidden; cursor: pointer; }
+    .explore-card:hover .cosmic-art { transform: scale(1.05); }
+    .explore-img-wrap { position: relative; height: 200px; overflow: hidden; }
+    .cosmic-art { width: 100%; height: 100%; position: relative; overflow: hidden; transition: transform var(--duration-slow) var(--ease-smooth); }
+    .cosmic-art::after { content: ''; position: absolute; inset: 0; background-image: radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8), transparent), radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.6), transparent), radial-gradient(1.5px 1.5px at 70% 30%, rgba(255,255,255,0.9), transparent), radial-gradient(1px 1px at 90% 50%, rgba(255,255,255,0.5), transparent), radial-gradient(2px 2px at 60% 10%, rgba(255,255,255,0.9), transparent); }
+    .ca-1 { background: radial-gradient(ellipse at 30% 50%, rgba(124,77,255,0.6) 0%, transparent 50%), radial-gradient(ellipse at 70% 30%, rgba(201,75,219,0.5) 0%, transparent 40%), var(--bg-void); }
+    .ca-2 { background: radial-gradient(ellipse at 60% 40%, rgba(255,111,216,0.6) 0%, transparent 45%), radial-gradient(ellipse at 20% 70%, rgba(255,154,86,0.5) 0%, transparent 40%), var(--bg-void); }
+    .ca-3 { background: radial-gradient(ellipse at 40% 30%, rgba(10,207,254,0.6) 0%, transparent 45%), radial-gradient(ellipse at 70% 60%, rgba(73,90,255,0.5) 0%, transparent 40%), var(--bg-void); }
+    .ca-4 { background: radial-gradient(ellipse at 50% 50%, rgba(247,151,30,0.6) 0%, transparent 40%), radial-gradient(ellipse at 30% 20%, rgba(255,210,0,0.4) 0%, transparent 40%), var(--bg-void); }
+    .ca-5 { background: radial-gradient(ellipse at 35% 45%, rgba(105,240,174,0.5) 0%, transparent 45%), radial-gradient(ellipse at 65% 25%, rgba(24,255,255,0.4) 0%, transparent 40%), var(--bg-void); }
+    .ca-6 { background: radial-gradient(ellipse at 25% 35%, rgba(224,64,251,0.6) 0%, transparent 45%), radial-gradient(ellipse at 75% 55%, rgba(124,77,255,0.5) 0%, transparent 40%), var(--bg-void); }
+    .explore-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(5,7,15,0.9) 100%); }
+    .explore-card-body { padding: var(--space-lg); }
+    .explore-card-title { font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; margin-bottom: var(--space-sm); }
+    .explore-card-desc { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: var(--space-md); }
+    .explore-card-meta { display: flex; align-items: center; justify-content: space-between; }
+    .explore-card-tags { display: flex; gap: var(--space-sm); }
+    .explore-card-distance { font-size: 0.75rem; color: var(--text-muted); }
+    .filter-bar { display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-2xl); flex-wrap: wrap; }
+    .filter-chip { padding: 8px 20px; border-radius: var(--radius-full); font-size: 0.8125rem; font-weight: 500; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-secondary); cursor: pointer; transition: all var(--duration-fast) var(--ease-smooth); font-family: var(--font-body); }
+    .filter-chip:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+    .filter-chip.active { background: rgba(124,77,255,0.2); border-color: var(--accent-purple); color: var(--accent-purple); }
+    .featured-card { grid-column: 1 / -1; display: grid; grid-template-columns: 1.5fr 1fr; overflow: hidden; padding: 0; cursor: pointer; }
+    .featured-card .explore-img-wrap { height: 100%; min-height: 280px; }
+    .featured-body { padding: var(--space-2xl); display: flex; flex-direction: column; justify-content: center; }
+    .featured-badge { display: inline-flex; padding: 4px 12px; border-radius: var(--radius-full); font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; background: var(--gradient-cosmic); color: white; margin-bottom: var(--space-md); width: fit-content; }
+    .featured-title { font-family: var(--font-display); font-size: 1.75rem; font-weight: 700; margin-bottom: var(--space-md); line-height: 1.2; }
+    .featured-desc { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-lg); }
+  </style>
+</head>
+<body>
+  <div class="starfield"><div class="stars-layer stars-1"></div><div class="stars-layer stars-2"></div></div>
+  <div class="nebula-glow purple"></div><div class="nebula-glow pink"></div>
+  <div class="sidebar">
+    <div class="logo"><div class="logo-icon">🌌</div><span class="logo-text">COSMOS</span></div>
+    <nav>
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="explore.html" class="nav-item active"><span class="nav-icon">🔭</span> Explore</a>
+      <a href="profile.html" class="nav-item"><span class="nav-icon">👨‍🚀</span> Profile</a>
+      <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span> Settings</a>
+      <div style="flex:1"></div>
+      <a href="index.html" class="nav-item"><span class="nav-icon">🚪</span> Logout</a>
+    </nav>
+  </div>
+  <div class="main-content">
+    <div class="page-header animate-in">
+      <div><div class="page-title">Explore the Cosmos</div><div class="page-subtitle">Discover nebulae, galaxies, and uncharted stellar regions</div></div>
+      <div class="search-bar"><span class="search-icon">🔍</span><input type="text" placeholder="Search nebulae, stars, galaxies..."></div>
+    </div>
+    <div class="filter-bar animate-in">
+      <button class="filter-chip active">🌌 All</button>
+      <button class="filter-chip">🌀 Nebulae</button>
+      <button class="filter-chip">🌟 Stars</button>
+      <button class="filter-chip">🪐 Planets</button>
+      <button class="filter-chip">🌊 Galaxies</button>
+      <button class="filter-chip">☄️ Comets</button>
+      <button class="filter-chip">🕳️ Black Holes</button>
+    </div>
+    <div class="explore-grid">
+      <div class="glass-card featured-card animate-in">
+        <div class="explore-img-wrap"><div class="cosmic-art ca-1"></div></div>
+        <div class="featured-body">
+          <div class="featured-badge">✨ Featured Discovery</div>
+          <div class="featured-title">The Veil of Andromeda</div>
+          <div class="featured-desc">A breathtaking nebula formation spanning over 12 light-years, revealing the lifecycle of massive stars through stunning emission spectra.</div>
+          <div class="explore-card-tags"><span class="tag">Nebula</span><span class="tag pink">Deep Space</span><span class="tag cyan">New</span></div>
+        </div>
+      </div>
+      <div class="glass-card explore-card animate-in">
+        <div class="explore-img-wrap"><div class="cosmic-art ca-2"></div><div class="explore-overlay"></div></div>
+        <div class="explore-card-body"><div class="explore-card-title">Crimson Nebula NGC-7293</div><div class="explore-card-desc">Planetary nebula with vivid hydrogen-alpha emissions creating a crimson spectacle.</div><div class="explore-card-meta"><div class="explore-card-tags"><span class="tag pink">Nebula</span></div><div class="explore-card-distance">650 ly</div></div></div>
+      </div>
+      <div class="glass-card explore-card animate-in">
+        <div class="explore-img-wrap"><div class="cosmic-art ca-3"></div><div class="explore-overlay"></div></div>
+        <div class="explore-card-body"><div class="explore-card-title">The Azure Depths</div><div class="explore-card-desc">A reflection nebula illuminated by young hot B-type stars in the Orion arm.</div><div class="explore-card-meta"><div class="explore-card-tags"><span class="tag blue">Reflection</span></div><div class="explore-card-distance">1,200 ly</div></div></div>
+      </div>
+      <div class="glass-card explore-card animate-in">
+        <div class="explore-img-wrap"><div class="cosmic-art ca-4"></div><div class="explore-overlay"></div></div>
+        <div class="explore-card-body"><div class="explore-card-title">Solar Remnant XR-42</div><div class="explore-card-desc">Supernova remnant expanding at 3,000 km/s through interstellar medium.</div><div class="explore-card-meta"><div class="explore-card-tags"><span class="tag orange">Supernova</span></div><div class="explore-card-distance">8,400 ly</div></div></div>
+      </div>
+      <div class="glass-card explore-card animate-in">
+        <div class="explore-img-wrap"><div class="cosmic-art ca-5"></div><div class="explore-overlay"></div></div>
+        <div class="explore-card-body"><div class="explore-card-title">Emerald Cluster M-37</div><div class="explore-card-desc">Open star cluster with over 1,500 stellar members showing unusual green emissions.</div><div class="explore-card-meta"><div class="explore-card-tags"><span class="tag green">Cluster</span></div><div class="explore-card-distance">4,200 ly</div></div></div>
+      </div>
+      <div class="glass-card explore-card animate-in">
+        <div class="explore-img-wrap"><div class="cosmic-art ca-6"></div><div class="explore-overlay"></div></div>
+        <div class="explore-card-body"><div class="explore-card-title">Violet Maelstrom</div><div class="explore-card-desc">Spiral galaxy in early collision phase creating a spectacular display of star formation.</div><div class="explore-card-meta"><div class="explore-card-tags"><span class="tag">Galaxy</span><span class="tag pink">Collision</span></div><div class="explore-card-distance">42M ly</div></div></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

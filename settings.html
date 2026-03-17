@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmos — Settings</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
+    .settings-section { padding: var(--space-xl); }
+    .settings-section-title { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: var(--space-lg); display: flex; align-items: center; gap: var(--space-sm); }
+    .setting-row { display: flex; align-items: center; justify-content: space-between; padding: var(--space-md) 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .setting-row:last-child { border-bottom: none; }
+    .setting-info { flex: 1; }
+    .setting-name { font-size: 0.9375rem; font-weight: 500; margin-bottom: 2px; }
+    .setting-desc { font-size: 0.75rem; color: var(--text-muted); }
+    .setting-control { flex-shrink: 0; margin-left: var(--space-lg); }
+    .color-swatches { display: flex; gap: var(--space-sm); margin-top: var(--space-md); }
+    .color-swatch { width: 32px; height: 32px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all var(--duration-fast) var(--ease-smooth); }
+    .color-swatch:hover { transform: scale(1.15); }
+    .color-swatch.active { border-color: white; box-shadow: 0 0 12px rgba(255,255,255,0.3); }
+    .danger-zone { border-color: rgba(255,82,82,0.2) !important; }
+    .danger-zone .settings-section-title { color: var(--accent-red); }
+    .btn-danger { background: rgba(255,82,82,0.15); color: var(--accent-red); border: 1px solid rgba(255,82,82,0.3); padding: 10px 20px; border-radius: var(--radius-md); font-family: var(--font-body); font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all var(--duration-fast) var(--ease-smooth); }
+    .btn-danger:hover { background: rgba(255,82,82,0.25); }
+    .storage-bar { margin-top: var(--space-md); }
+    .storage-bg { height: 8px; border-radius: 4px; background: rgba(255,255,255,0.06); overflow: hidden; margin-bottom: var(--space-sm); }
+    .storage-fill { height: 100%; border-radius: 4px; background: var(--gradient-cosmic); transition: width 1s var(--ease-smooth); }
+    .storage-info { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); }
+    .keyboard-shortcut { display: inline-flex; align-items: center; gap: 4px; }
+    .kbd { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; padding: 0 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-size: 0.6875rem; font-family: var(--font-body); color: var(--text-secondary); }
+    .shortcuts-list { display: flex; flex-direction: column; gap: var(--space-md); }
+    .shortcut-row { display: flex; align-items: center; justify-content: space-between; }
+    .shortcut-label { font-size: 0.8125rem; color: var(--text-secondary); }
+    .version-info { text-align: center; padding: var(--space-xl); color: var(--text-muted); font-size: 0.75rem; }
+    .version-info .app-ver { font-family: var(--font-display); font-size: 1rem; color: var(--text-secondary); margin-bottom: var(--space-xs); }
+  </style>
+</head>
+<body>
+  <div class="starfield"><div class="stars-layer stars-1"></div><div class="stars-layer stars-2"></div></div>
+  <div class="nebula-glow purple"></div><div class="nebula-glow blue"></div>
+  <div class="sidebar">
+    <div class="logo"><div class="logo-icon">🌌</div><span class="logo-text">COSMOS</span></div>
+    <nav>
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="explore.html" class="nav-item"><span class="nav-icon">🔭</span> Explore</a>
+      <a href="profile.html" class="nav-item"><span class="nav-icon">👨‍🚀</span> Profile</a>
+      <a href="settings.html" class="nav-item active"><span class="nav-icon">⚙️</span> Settings</a>
+      <div style="flex:1"></div>
+      <a href="index.html" class="nav-item"><span class="nav-icon">🚪</span> Logout</a>
+    </nav>
+  </div>
+  <div class="main-content">
+    <div class="page-header animate-in">
+      <div><div class="page-title">Space Station Controls</div><div class="page-subtitle">Configure your Cosmos experience</div></div>
+      <button class="btn btn-cosmic">💾 Save Changes</button>
+    </div>
+    <div class="settings-grid">
+      <!-- Account -->
+      <div class="glass-card settings-section animate-in">
+        <div class="settings-section-title">👤 Account</div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Display Name</div><div class="setting-desc">Commander Harsh</div></div>
+          <button class="btn btn-ghost" style="padding:8px 16px;font-size:0.8125rem;">Edit</button>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Email</div><div class="setting-desc">harsh@cosmos.io</div></div>
+          <button class="btn btn-ghost" style="padding:8px 16px;font-size:0.8125rem;">Change</button>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Two-Factor Auth</div><div class="setting-desc">Secure your account with 2FA</div></div>
+          <div class="setting-control"><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Session Timeout</div><div class="setting-desc">Auto-logout after inactivity</div></div>
+          <div class="setting-control"><select class="select-field" style="width:120px;padding:8px 12px;font-size:0.8125rem;"><option>30 min</option><option selected>1 hour</option><option>4 hours</option><option>Never</option></select></div>
+        </div>
+      </div>
+      <!-- Appearance -->
+      <div class="glass-card settings-section animate-in">
+        <div class="settings-section-title">🎨 Appearance</div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Theme</div><div class="setting-desc">Choose your cosmic palette</div></div>
+          <div class="setting-control"><select class="select-field" style="width:140px;padding:8px 12px;font-size:0.8125rem;"><option selected>Deep Void</option><option>Nebula Night</option><option>Starlight</option></select></div>
+        </div>
+        <div class="setting-row" style="flex-direction:column;align-items:flex-start;">
+          <div class="setting-info"><div class="setting-name">Accent Color</div><div class="setting-desc">Customize your UI highlight color</div></div>
+          <div class="color-swatches">
+            <div class="color-swatch active" style="background:var(--accent-purple);"></div>
+            <div class="color-swatch" style="background:var(--accent-pink);"></div>
+            <div class="color-swatch" style="background:var(--accent-blue);"></div>
+            <div class="color-swatch" style="background:var(--accent-cyan);"></div>
+            <div class="color-swatch" style="background:var(--accent-green);"></div>
+            <div class="color-swatch" style="background:var(--accent-orange);"></div>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Starfield Animation</div><div class="setting-desc">Animated background particles</div></div>
+          <div class="setting-control"><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Reduced Motion</div><div class="setting-desc">Minimize UI animations</div></div>
+          <div class="setting-control"><label class="toggle"><input type="checkbox"><span class="slider"></span></label></div>
+        </div>
+      </div>
+      <!-- Notifications -->
+      <div class="glass-card settings-section animate-in">
+        <div class="settings-section-title">🔔 Notifications</div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Mission Alerts</div><div class="setting-desc">Updates on active missions</div></div>
+          <div class="setting-control"><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Discovery Alerts</div><div class="setting-desc">New cosmic discoveries nearby</div></div>
+          <div class="setting-control"><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Crew Messages</div><div class="setting-desc">Messages from crew members</div></div>
+          <div class="setting-control"><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">System Reports</div><div class="setting-desc">Weekly system status digests</div></div>
+          <div class="setting-control"><label class="toggle"><input type="checkbox"><span class="slider"></span></label></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Sound Effects</div><div class="setting-desc">Audio feedback for events</div></div>
+          <div class="setting-control"><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+        </div>
+      </div>
+      <!-- Storage & Data -->
+      <div class="glass-card settings-section animate-in">
+        <div class="settings-section-title">💾 Storage & Data</div>
+        <div class="setting-row" style="flex-direction:column;align-items:flex-start;">
+          <div class="setting-info"><div class="setting-name">Storage Usage</div><div class="setting-desc">Your data across the cosmos</div></div>
+          <div class="storage-bar" style="width:100%;">
+            <div class="storage-bg"><div class="storage-fill" style="width:67%;"></div></div>
+            <div class="storage-info"><span>67.2 GB used</span><span>100 GB total</span></div>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Auto-Sync</div><div class="setting-desc">Sync data across devices</div></div>
+          <div class="setting-control"><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Cache</div><div class="setting-desc">2.4 GB cached data</div></div>
+          <button class="btn btn-ghost" style="padding:8px 16px;font-size:0.8125rem;">Clear</button>
+        </div>
+        <div class="divider"></div>
+        <div class="shortcuts-list">
+          <div class="settings-section-title" style="margin-bottom: var(--space-sm);">⌨️ Shortcuts</div>
+          <div class="shortcut-row"><span class="shortcut-label">Search</span><div class="keyboard-shortcut"><span class="kbd">⌘</span><span class="kbd">K</span></div></div>
+          <div class="shortcut-row"><span class="shortcut-label">New Mission</span><div class="keyboard-shortcut"><span class="kbd">⌘</span><span class="kbd">N</span></div></div>
+          <div class="shortcut-row"><span class="shortcut-label">Settings</span><div class="keyboard-shortcut"><span class="kbd">⌘</span><span class="kbd">,</span></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- Danger Zone -->
+    <div class="glass-card settings-section danger-zone animate-in" style="margin-top:var(--space-lg);">
+      <div class="settings-section-title">⚠️ Danger Zone</div>
+      <div style="display:flex;gap:var(--space-md);">
+        <div style="flex:1;"><div class="setting-name">Delete Account</div><div class="setting-desc" style="margin-top:4px;">Permanently delete your account and all data. This action cannot be undone.</div></div>
+        <button class="btn-danger">Delete Account</button>
+      </div>
+    </div>
+    <!-- Version -->
+    <div class="version-info animate-in">
+      <div class="app-ver">Cosmos v4.2.0</div>
+      <div>Built with ❤️ for interstellar explorers • © 2026 Cosmos Labs</div>
+    </div>
+  </div>
+</body>
+</html>
